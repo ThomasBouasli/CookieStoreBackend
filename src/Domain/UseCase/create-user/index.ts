@@ -1,3 +1,4 @@
+import { hashSync } from 'bcrypt'
 import { IUserRepository } from "@Adapter/Repository";
 import { User } from "@Domain/Entity";
 import { Either, Left, Right } from "@Util/FunctionalErrorHandler";
@@ -17,7 +18,7 @@ export class CreateUser {
       id: randomUUID(),
       name,
       email,
-      password
+      password : hashSync(password, 10),
     }
     const userExists = await this.userRepo.findByEmail(user.email);
     if (userExists) {
