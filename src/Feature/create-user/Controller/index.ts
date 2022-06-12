@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { IUserRepository } from "@Adapter/Repository";
-import { CreateUser } from "@Domain/Feature";
+import { CreateUser } from "@UseCase/create-user";
 import { NextFunction, Request, Response } from "express";
 
 export class CreateUserController {

@@ -1,6 +1,6 @@
 import { InMemoryUserRepository } from "@Adapter/Repository/User/inMemory";
 import { LogIn } from ".";
-import { CreateUser } from "..";
+import { CreateUser } from "@UseCase/create-user";
 
 const userRepo = new InMemoryUserRepository();
 const dependency = new CreateUser(userRepo);

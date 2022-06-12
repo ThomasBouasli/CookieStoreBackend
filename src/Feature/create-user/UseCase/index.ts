@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { hashSync } from 'bcrypt'
 import { IUserRepository } from "@Adapter/Repository";
-import { User } from "@Domain/Entity";
+import { User } from "@Entity";
 import { Either, Left, Right } from "@Util/FunctionalErrorHandler";
 
 export type CreateUserRequest = {

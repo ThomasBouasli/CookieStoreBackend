@@ -1,4 +1,4 @@
-import { User } from "@Domain/Entity";
+import { User } from "@Entity";
 import { Either, Left, Right } from "@Util/FunctionalErrorHandler";
 import { IUserRepository } from "./interface";
 

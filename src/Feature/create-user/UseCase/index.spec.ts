@@ -1,5 +1,5 @@
 import { InMemoryUserRepository } from "@Adapter/Repository/User/inMemory";
-import { CreateUser } from "./useCase";
+import { CreateUser } from ".";
 
 const userRepo = new InMemoryUserRepository();
 const service = new CreateUser(userRepo);

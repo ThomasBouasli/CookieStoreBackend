@@ -89,11 +89,14 @@ export default {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    "^@Domain/(.*)$": "<rootDir>/src/Domain/$1",
     "^@Adapter/(.*)$": "<rootDir>/src/Adapter/$1",
     "^@Application/(.*)$": "<rootDir>/src/Application/$1",
+    "^@Application": "<rootDir>/src/Application/index.ts",
     "^@Util/(.*)$": "<rootDir>/src/Util/$1",
-    "^@Controller/(.*)$": "<rootDir>/src/Domain/Feature/$1/controller.ts",
+    "^@Controller/(.*)$": "<rootDir>/src/Feature/$1/Controller",
+    "^@UseCase/(.*)$": "<rootDir>/src/Feature/$1/UseCase",
+    "^@Entity/(.*)$": "<rootDir>/src/Entity/$1",
+    "^@Entity": "<rootDir>/src/Entity/index.ts",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
