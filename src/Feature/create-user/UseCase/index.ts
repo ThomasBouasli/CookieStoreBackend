@@ -1,8 +1,8 @@
-import { randomUUID } from "crypto";
-import { hashSync } from 'bcrypt'
-import { IUserRepository } from "@Adapter/Repository";
-import { User } from "@Entity/User";
-import { Either, Left, Right } from "@Util/FunctionalErrorHandler";
+import { randomUUID } from 'crypto';
+import { hashSync } from 'bcrypt';
+import { IUserRepository } from '@Adapter/Repository';
+import { User } from '@Entity/User';
+import { Either, Left, Right } from '@Util/FunctionalErrorHandler';
 
 export type CreateUserRequest = {
   name: string;
@@ -12,17 +12,21 @@ export type CreateUserRequest = {
 export class CreateUser {
   constructor(private userRepo: IUserRepository) {}
 
-  async execute({ name, email, password } : CreateUserRequest): Promise<Either<Error, User>> {
-
-    const user : User = {
+  async execute({
+    name,
+    email,
+    password
+  }: CreateUserRequest): Promise<Either<Error, User>> {
+    const user: User = {
       id: randomUUID(),
       name,
       email,
-      password : hashSync(password, 10),
-    }
+      password: hashSync(password, 10),
+      Cookies: []
+    };
     const userExists = await this.userRepo.findByEmail(user.email);
     if (userExists) {
-      return new Left(new Error("User already exists"));
+      return new Left(new Error('User already exists'));
     }
     const okOrError = await this.userRepo.create(user);
 
