@@ -95,8 +95,7 @@ export default {
     "^@Util/(.*)$": "<rootDir>/src/Util/$1",
     "^@Controller/(.*)$": "<rootDir>/src/Feature/$1/Controller",
     "^@UseCase/(.*)$": "<rootDir>/src/Feature/$1/UseCase",
-    "^@Entity/(.*)$": "<rootDir>/src/Entity/$1",
-    "^@Entity": "<rootDir>/src/Entity/index.ts",
+    "^@Entity/(.*)$": "<rootDir>/src/Entity/$1/index.ts",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

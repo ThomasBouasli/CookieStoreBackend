@@ -1,4 +1,4 @@
-import { User } from "@Entity";
+import { User } from "@Entity/User";
 import { Either } from "@Util/FunctionalErrorHandler";
 
 export interface IUserRepository {
