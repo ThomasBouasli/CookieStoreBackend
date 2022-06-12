@@ -1,4 +1,4 @@
-import Express from "express";
+import Express, { Request, Response } from "express";
 import { userRouter } from "./Routes";
 import { InMemoryUserRepository } from "@Adapter/Repository/User";
 
@@ -7,7 +7,7 @@ const userRepo = new InMemoryUserRepository();
 
 app.use(Express.json());
 app.use("/api", userRouter(userRepo));
-app.use((err: any, req: any, res: any, next: any) => {
+app.use((err: Error, req: Request, res: Response) => {
   //Temporary Error Handler
   res.status(500).send({ error: err.message });
 });
