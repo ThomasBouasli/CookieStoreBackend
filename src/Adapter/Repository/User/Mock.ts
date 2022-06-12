@@ -5,6 +5,14 @@ import { IUserRepository } from './Interface';
 export class MockUserRepository implements IUserRepository {
   private users: User[] = [];
 
+  async findById(id: string): Promise<Either<Error, User>> {
+    const user = this.users.find((user) => user.id === id);
+    if (!user) {
+      return new Left(new Error('User not found'));
+    }
+    return new Right(user);
+  }
+
   async findByEmail(email: string): Promise<User | undefined> {
     return this.users.find((user) => user.email === email);
   }
