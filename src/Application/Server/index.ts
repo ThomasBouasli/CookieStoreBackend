@@ -1,12 +1,12 @@
-import Express, { Request, Response } from "express";
-import { userRouter } from "./Routes";
-import { InMemoryUserRepository } from "@Adapter/Repository/User";
+import Express, { Request, Response } from 'express';
+import { userRouter } from './Routes';
+import { MockUserRepository } from '@Adapter/Repository/User';
 
 const app = Express();
-const userRepo = new InMemoryUserRepository();
+const userRepo = new MockUserRepository();
 
 app.use(Express.json());
-app.use("/api", userRouter(userRepo));
+app.use('/api', userRouter(userRepo));
 app.use((err: Error, req: Request, res: Response) => {
   //Temporary Error Handler
   res.status(500).send({ error: err.message });

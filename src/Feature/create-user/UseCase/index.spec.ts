@@ -1,11 +1,15 @@
-import { InMemoryUserRepository } from "@Adapter/Repository/User/inMemory";
-import { CreateUser } from ".";
+import { MockUserRepository } from '@Adapter/Repository/User/Mock';
+import { CreateUser } from '.';
 
-const userRepo = new InMemoryUserRepository();
+const userRepo = new MockUserRepository();
 const service = new CreateUser(userRepo);
 
-it("should create a new user", async () => {
-  const user = await service.execute({ name: "John Doe", email: "john@doe.com", password: "123456" });
+it('should create a new user', async () => {
+  const user = await service.execute({
+    name: 'John Doe',
+    email: 'john@doe.com',
+    password: '123456'
+  });
   expect(user.isRight()).toBeTruthy();
-  expect(user.value.name).toBe("John Doe");
+  expect(user.value.name).toBe('John Doe');
 });
