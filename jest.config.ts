@@ -93,6 +93,7 @@ export default {
     "^@Adapter/(.*)$": "<rootDir>/src/Adapter/$1",
     "^@Application/(.*)$": "<rootDir>/src/Application/$1",
     "^@Util/(.*)$": "<rootDir>/src/Util/$1",
+    "^@Controller/(.*)$": "<rootDir>/src/Domain/Feature/$1/controller.ts",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -179,8 +180,8 @@ export default {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest"
-  }
+    "^.+\\.(ts|tsx)$": "ts-jest",
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
