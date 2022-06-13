@@ -1,16 +1,19 @@
 import { Either, Left, Right } from '@Util/FunctionalErrorHandler';
 import { Cookie } from 'Entity/Cookie';
+import { users } from '../User';
 import { ICookieRepository } from './Interface';
 
-export class MockCookieRepository implements ICookieRepository {
-  private cookies: Cookie[] = [];
+export const cookies: Cookie[] = [];
 
+export class MockCookieRepository implements ICookieRepository {
   async create(cookie: Cookie): Promise<Either<Error, Cookie>> {
-    if (this.cookies.find((c) => c.id === cookie.id)) {
+    if (cookies.find((c) => c.id === cookie.id)) {
       return new Left(new Error('Cookie already exists'));
     }
 
-    this.cookies.push(cookie);
+    cookies.push(cookie);
+
+    users.find((user) => user.id === cookie.id)?.Cookies.push(cookie);
 
     return new Right(cookie);
   }

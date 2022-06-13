@@ -2,11 +2,11 @@ import { User } from '@Entity/User';
 import { Either, Left, Right } from '@Util/FunctionalErrorHandler';
 import { IUserRepository } from './Interface';
 
-export class MockUserRepository implements IUserRepository {
-  private users: User[] = [];
+export const users: User[] = [];
 
+export class MockUserRepository implements IUserRepository {
   async findById(id: string): Promise<Either<Error, User>> {
-    const user = this.users.find((user) => user.id === id);
+    const user = users.find((user) => user.id === id);
     if (!user) {
       return new Left(new Error('User not found'));
     }
@@ -14,7 +14,7 @@ export class MockUserRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    return this.users.find((user) => user.email === email);
+    return users.find((user) => user.email === email);
   }
 
   async create(user: User): Promise<Either<Error, User>> {
@@ -22,7 +22,7 @@ export class MockUserRepository implements IUserRepository {
     if (userExists) {
       return new Left(new Error('User already exists'));
     }
-    this.users.push(user);
+    users.push(user);
     return new Right(user);
   }
 }

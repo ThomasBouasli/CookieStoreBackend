@@ -36,5 +36,13 @@ describe('bake cookie use case', () => {
     }
 
     expect(cookie.value).toBeDefined();
+
+    const userOrError = await userRepo.findById(user.id);
+
+    if (userOrError.isLeft()) {
+      throw userOrError.value;
+    }
+
+    expect(userOrError.value.Cookies.length).toBe(1);
   });
 });
