@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import { MockUserRepository } from '@Adapter/Repository';
 import { MockCookieRepository } from '@Adapter/Repository/Cookie/Mock';
 import { CreateUser } from '@UseCase/create-user';
@@ -23,7 +24,9 @@ describe('bake cookie use case', () => {
       throw userOrError.value;
     }
 
-    user = userOrError.value;
+    const token = userOrError.value;
+
+    user = jwt.verify(token, process.env.JWT_SECRET ?? 'no_env') as User;
   });
 
   it('should create a cookie', async () => {
