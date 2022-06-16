@@ -23,9 +23,6 @@ export function userRouter(
     );
   router
     .route('/bake')
-    .post(
-      new BakeCookieController(userRepo, cookieRepo).validate,
-      new BakeCookieController(userRepo, cookieRepo).handle
-    );
+    .post(new BakeCookieController(userRepo, cookieRepo).handle);
   return router;
 }

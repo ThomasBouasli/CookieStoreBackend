@@ -18,7 +18,10 @@ export class BakeCookie {
   async execute({
     token
   }: CreateCookieRequest): Promise<Either<Error, Cookie>> {
-    const decoded = jwt.decode(token) as User;
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET ?? 'no_env'
+    ) as User;
 
     if (!decoded) throw new Error('Invalid token');
 
