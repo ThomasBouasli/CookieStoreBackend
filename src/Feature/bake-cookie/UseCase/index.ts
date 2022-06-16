@@ -3,6 +3,7 @@ import { IUserRepository, ICookieRepository } from '@Adapter/Repository';
 import { Either, Left, Right } from '@Util/FunctionalErrorHandler';
 import { Cookie } from 'Entity/Cookie';
 import { User } from 'Entity/User';
+import { randomUUID } from 'crypto';
 
 export type CreateCookieRequest = {
   token: string;
@@ -29,10 +30,14 @@ export class BakeCookie {
 
     const user = userOrError.value;
 
-    const cookie: Cookie = {
-      id: user.id,
+    let cookie: Cookie = {
+      id: randomUUID(),
       name: Math.random().toString(),
-      owner: user
+      owner: {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      }
     };
 
     const cookieOrError = await this.cookieRepo.create(cookie);
@@ -40,6 +45,14 @@ export class BakeCookie {
     if (cookieOrError.isLeft()) {
       return new Left(cookieOrError.value);
     }
+
+    const okOrError = await this.userRepo.update(user);
+
+    if (okOrError.isLeft()) {
+      return new Left(okOrError.value);
+    }
+
+    cookie = cookieOrError.value;
 
     return new Right(cookieOrError.value);
   }
