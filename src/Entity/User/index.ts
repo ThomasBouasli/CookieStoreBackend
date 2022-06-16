@@ -5,5 +5,5 @@ export type User = {
   name: string;
   email: string;
   password: string;
-  Cookies: Omit<Cookie, 'owner'>[];
+  cookies: Omit<Cookie, 'owner'>[];
 };

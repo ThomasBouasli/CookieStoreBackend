@@ -23,7 +23,7 @@ export class CreateUser {
       name,
       email,
       password: hashSync(password, 10),
-      Cookies: []
+      cookies: []
     };
     const userExists = await this.userRepo.findByEmail(user.email);
     if (userExists) {

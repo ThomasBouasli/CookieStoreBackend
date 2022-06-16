@@ -13,7 +13,7 @@ export class MockCookieRepository implements ICookieRepository {
 
     cookies.push(cookie);
 
-    users.find((user) => user.id === cookie.id)?.Cookies.push(cookie);
+    users.find((user) => user.id === cookie.id)?.cookies.push(cookie);
 
     return new Right(cookie);
   }

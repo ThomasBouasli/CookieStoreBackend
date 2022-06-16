@@ -48,6 +48,6 @@ describe('bake cookie use case', () => {
 
     const user = userOrError.value;
 
-    expect(user.Cookies).toContainEqual(cookie.value);
+    expect(user.cookies).toContainEqual(cookie.value);
   });
 });
