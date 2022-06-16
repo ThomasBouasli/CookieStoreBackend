@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { MockUserRepository, users } from '@Adapter/Repository';
+import { MockUserRepository } from '@Adapter/Repository';
 import { MockCookieRepository } from '@Adapter/Repository/Cookie/Mock';
 import { CreateUser } from '@UseCase/create-user';
 import { User } from 'Entity/User';
@@ -7,7 +7,7 @@ import { BakeCookie } from '.';
 
 describe('bake cookie use case', () => {
   const userRepo = new MockUserRepository();
-  const cookieRepo = new MockCookieRepository();
+  const cookieRepo = new MockCookieRepository(userRepo);
   const createUser = new CreateUser(userRepo);
   const bakeCookie = new BakeCookie(cookieRepo, userRepo);
 
