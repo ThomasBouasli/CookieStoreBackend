@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { MockUserRepository } from '@Adapter/Repository';
+import { MockUserRepository, users } from '@Adapter/Repository';
 import { MockCookieRepository } from '@Adapter/Repository/Cookie/Mock';
 import { CreateUser } from '@UseCase/create-user';
 import { User } from 'Entity/User';
@@ -37,5 +37,17 @@ describe('bake cookie use case', () => {
     }
 
     expect(cookie.value).toBeDefined();
+
+    const decoded = jwt.decode(token) as User;
+
+    const userOrError = await userRepo.findById(decoded.id);
+
+    if (userOrError.isLeft()) {
+      throw userOrError.value;
+    }
+
+    const user = userOrError.value;
+
+    expect(user.Cookies).toContainEqual(cookie.value);
   });
 });
