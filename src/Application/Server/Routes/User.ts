@@ -3,6 +3,7 @@ import { ICookieRepository, IUserRepository } from '@Adapter/Repository';
 import { Router } from 'express';
 import { LogInController } from '@Controller/log-in';
 import { BakeCookieController } from '@Controller/bake-cookie';
+import { GetAllCookiesFromUserController } from '@Controller/get-all-cookies-from-user';
 const router = Router();
 
 export function userRouter(
@@ -24,5 +25,6 @@ export function userRouter(
   router
     .route('/bake')
     .post(new BakeCookieController(userRepo, cookieRepo).handle);
+  router.get('/cookies', new GetAllCookiesFromUserController(userRepo).handle);
   return router;
 }
