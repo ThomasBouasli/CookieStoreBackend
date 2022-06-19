@@ -37,7 +37,21 @@ export default function useBackend() {
     }
   }
 
+  async function VerifyToken() {
+    const { data } = await axios.get('/api/verify-token', {
+      headers: {
+        Authorization: localStorage.getItem('token') ?? ''
+      }
+    });
+
+    if (!data.isValid) {
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+  }
+
   return {
-    Register
+    Register,
+    VerifyToken
   };
 }
