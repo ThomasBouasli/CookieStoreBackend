@@ -24,8 +24,6 @@ describe('Verify Token', () => {
       .set('Authorization', token)
       .send();
 
-    console.log(response);
-
     expect(response.body.isValid).toBe(true);
   });
 });
