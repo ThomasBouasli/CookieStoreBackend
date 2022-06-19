@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Page = styled.div`
-  height: 100vh;
+  height: 100%;
   padding: 60px 20px;
   box-sizing: border-box;
 `;

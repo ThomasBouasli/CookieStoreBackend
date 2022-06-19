@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
-import Button from '../../Components/Button';
+
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/icons-material/Add';
+
 import useBackend from '../../Hooks/useBackend';
+
 import * as PS from '../../Styles/pages';
+import * as S from './styles';
+
+import cookieImage from '../../Assets/cookie.png';
 
 export default function Home() {
   const [cookies, setCookies] = useState([]);
@@ -25,14 +32,22 @@ export default function Home() {
   return (
     <PS.Page>
       <PS.Title>Main</PS.Title>
-      <Button text="Bake Cookie" onClick={sendBakeCookieRequest} />
-      {cookies?.map((cookie) => (
-        // @ts-ignore
-        <div key={cookie?.id}>
-          {/* @ts-ignore */}
-          <span>{cookie?.name}</span>
-        </div>
-      ))}
+      <SpeedDial
+        ariaLabel="SpeedDial basic example"
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon />}
+        onClick={sendBakeCookieRequest}
+      ></SpeedDial>
+      <S.Wrapper>
+        {cookies?.map((cookie) => (
+          //@ts-ignore
+          <S.Cookie key={cookie.id}>
+            <img src={cookieImage} alt="" />
+            {/* @ts-ignore */}
+            <span>{cookie?.name}</span>
+          </S.Cookie>
+        ))}
+      </S.Wrapper>
     </PS.Page>
   );
 }
