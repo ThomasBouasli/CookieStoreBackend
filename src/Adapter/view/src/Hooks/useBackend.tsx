@@ -9,7 +9,8 @@ export default function useBackend() {
     register: '/api/register',
     verifyToken: '/api/verify-token',
     getAllCookiesFromUser: '/api/cookies',
-    bakeCookie: '/api/bake'
+    bakeCookie: '/api/bake',
+    logIn: '/api/login'
   };
 
   if (process.env.NODE_ENV === 'development') {
@@ -17,12 +18,44 @@ export default function useBackend() {
     paths.verifyToken = 'http://localhost:3333/api/verify-token';
     paths.getAllCookiesFromUser = 'http://localhost:3333/api/cookies';
     paths.bakeCookie = 'http://localhost:3333/api/bake';
+    paths.logIn = 'http://localhost:3333/api/login';
   }
 
   async function Register(name: string, email: string, password: string) {
     try {
       const { data } = await axios.post(paths.register, {
         name,
+        email,
+        password
+      });
+
+      localStorage.setItem('token', data.token);
+
+      navigate('/home');
+
+      return;
+    } catch (error: any) {
+      Store.addNotification({
+        title: 'Error!',
+        message: error.response.data.message,
+        type: 'danger',
+        insert: 'top',
+        container: 'top-right',
+        animationIn: ['animate__animated', 'animate__fadeIn'],
+        animationOut: ['animate__animated', 'animate__fadeOut'],
+        dismiss: {
+          duration: 5000,
+          onScreen: true
+        }
+      });
+
+      return;
+    }
+  }
+
+  async function LogIn(email: string, password: string) {
+    try {
+      const { data } = await axios.post(paths.logIn, {
         email,
         password
       });
@@ -126,6 +159,7 @@ export default function useBackend() {
 
   return {
     Register,
+    LogIn,
     VerifyToken,
     getAllCookiesFromUser,
     bakeCookie

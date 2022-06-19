@@ -16,7 +16,7 @@ export default function LandingPage() {
             text="Log In"
             secondary
             large
-            onClick={() => console.log('a')}
+            onClick={() => navigate('log-in')}
           />
         </S.ButtonWrapper>
       </S.Wrapper>
