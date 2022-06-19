@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import useBackend from '../Hooks/useBackend';
-import Main from '../Pages/Main';
+import Home from '../Pages/Home';
 
 export default function AuthRoutes() {
   const { VerifyToken } = useBackend();
@@ -12,7 +12,7 @@ export default function AuthRoutes() {
 
   return (
     <Routes>
-      <Route path="/home" element={<Main />} />
+      <Route path="/home" element={<Home />} />
     </Routes>
   );
 }
