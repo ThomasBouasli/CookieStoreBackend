@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import { Either, Left, Right } from '@Util/FunctionalErrorHandler';
 import { User } from 'Entity/User';
-import { IUserRepository } from '.';
+import { IUserRepository, prisma } from '..';
 
 export class PrismaUserRepository implements IUserRepository {
   async create(user: User): Promise<Either<Error, User>> {
-    const prisma = new PrismaClient();
     try {
       const newUser = await prisma.user.create({
         data: {
@@ -30,7 +28,6 @@ export class PrismaUserRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    const prisma = new PrismaClient();
     try {
       const user = await prisma.user.findUnique({
         where: {
@@ -54,8 +51,6 @@ export class PrismaUserRepository implements IUserRepository {
   }
 
   async findById(id: string): Promise<Either<Error, User>> {
-    const prisma = new PrismaClient();
-
     try {
       const user = await prisma.user.findUnique({
         where: {
@@ -77,8 +72,6 @@ export class PrismaUserRepository implements IUserRepository {
   }
 
   async update(user: User): Promise<Either<Error, User>> {
-    const prisma = new PrismaClient();
-
     try {
       const updatedUser = await prisma.user.update({
         where: {

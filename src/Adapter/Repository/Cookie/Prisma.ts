@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import { Either, Left, Right } from '@Util/FunctionalErrorHandler';
 import { Cookie } from 'Entity/Cookie';
-import { ICookieRepository } from './Interface';
+import { ICookieRepository, prisma } from '..';
 
 export class PrismaCookieRepository implements ICookieRepository {
   async create(cookie: Cookie): Promise<Either<Error, Cookie>> {
-    const prisma = new PrismaClient();
     try {
       await prisma.cookie.create({
         data: {

@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(Express.json());
 app.use('/api', userRouter(userRepo, cookieRepo));
 app.use(Express.static(path.join(__dirname, '../../Adapter/view/build')));
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   //Let React Router handle all other routes
   res.sendFile(
     path.resolve(__dirname, '../../Adapter/view/build', 'index.html')

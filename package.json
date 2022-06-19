@@ -11,7 +11,7 @@
     "test": "dotenv -e .env.test -- jest",
     "lint": "eslint . --ext .ts",
     "prepare": "husky install",
-    "build": "tsc && mkdir build/Adapter/view && cd src/Adapter/view && yarn build"
+    "build": "tsc && rm -rf build/Adapter/view && mkdir build/Adapter/view && cd src/Adapter/view && yarn build"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
