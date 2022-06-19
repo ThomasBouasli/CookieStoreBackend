@@ -27,7 +27,7 @@
   "scripts": {
     "dev": "dotenv -e .env.dev -- react-scripts start",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && mv build ../../../build/Adapter/view",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
