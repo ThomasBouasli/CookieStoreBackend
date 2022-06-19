@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import { MockUserRepository } from '@Adapter/Repository';
 import { MockCookieRepository } from '@Adapter/Repository/Cookie/Mock';
 import { CreateUser } from '@UseCase/create-user';
@@ -11,7 +10,7 @@ describe('bake cookie use case', () => {
   const createUser = new CreateUser(userRepo);
   const bakeCookie = new BakeCookie(cookieRepo, userRepo);
 
-  let token: string;
+  let user: User;
 
   beforeAll(async () => {
     const userOrError = await createUser.execute({
@@ -24,12 +23,12 @@ describe('bake cookie use case', () => {
       throw userOrError.value;
     }
 
-    token = userOrError.value;
+    user = userOrError.value;
   });
 
   it('should create a cookie', async () => {
     const cookie = await bakeCookie.execute({
-      token
+      userID: user.id
     });
 
     if (cookie.isLeft()) {
@@ -38,16 +37,14 @@ describe('bake cookie use case', () => {
 
     expect(cookie.value).toBeDefined();
 
-    const decoded = jwt.decode(token) as User;
-
-    const userOrError = await userRepo.findById(decoded.id);
+    const userOrError = await userRepo.findById(user.id);
 
     if (userOrError.isLeft()) {
       throw userOrError.value;
     }
 
-    const user = userOrError.value;
+    const updatedUser = userOrError.value;
 
-    expect(user.cookies).toContainEqual(cookie.value);
+    expect(updatedUser.cookies).toContainEqual(cookie.value);
   });
 });

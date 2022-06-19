@@ -13,7 +13,7 @@ export default function useBackend() {
         password
       });
 
-      localStorage.setItem('token', `Bearer ${data}`);
+      localStorage.setItem('token', data.token);
 
       navigate('/home');
 

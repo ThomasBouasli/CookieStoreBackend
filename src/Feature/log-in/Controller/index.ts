@@ -1,15 +1,19 @@
-import { IUserRepository } from "@Adapter/Repository";
-import { LogIn, LogInRequest } from "@UseCase/log-in";
-import { Request, Response, NextFunction } from "express";
-import Joi from "joi";
+import jwt from 'jsonwebtoken';
+import { IUserRepository } from '@Adapter/Repository';
+import { LogIn, LogInRequest } from '@UseCase/log-in';
+import { Request, Response, NextFunction } from 'express';
+import Joi from 'joi';
 
 export class LogInController {
   private schema = Joi.object({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8).max(150),
+    password: Joi.string().required().min(8).max(150)
   });
 
-  constructor(userRepo: IUserRepository, private service = new LogIn(userRepo)) {
+  constructor(
+    userRepo: IUserRepository,
+    private service = new LogIn(userRepo)
+  ) {
     this.handle = this.handle.bind(this);
     this.validate = this.validate.bind(this);
   }
@@ -17,13 +21,20 @@ export class LogInController {
   async handle(request: Request, response: Response, next: NextFunction) {
     const data: LogInRequest = request.body;
 
-    const okOrError = await this.service.execute(data);
+    const userOrError = await this.service.execute(data);
 
-    if (okOrError.isLeft()) {
-      return next(okOrError.value);
+    if (userOrError.isLeft()) {
+      return next(userOrError.value);
     }
 
-    response.status(200).json(okOrError.value);
+    const user = userOrError.value;
+
+    const token = `Bearer ${jwt.sign(
+      { id: user.id },
+      process.env.JWT_SECRET || 'no_env'
+    )}`;
+
+    response.status(200).json({ token });
   }
 
   async validate(request: Request, response: Response, next: NextFunction) {
@@ -33,7 +44,7 @@ export class LogInController {
 
     if (error) {
       return response.status(400).json({
-        message: error.details[0].message,
+        message: error.details[0].message
       });
     }
     next();

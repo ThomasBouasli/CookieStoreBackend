@@ -1,12 +1,10 @@
-import jwt from 'jsonwebtoken';
 import { IUserRepository, ICookieRepository } from '@Adapter/Repository';
 import { Either, Left, Right } from '@Util/FunctionalErrorHandler';
 import { Cookie } from 'Entity/Cookie';
-import { User } from 'Entity/User';
 import { randomUUID } from 'crypto';
 
 export type CreateCookieRequest = {
-  token: string;
+  userID: string;
 };
 
 export class BakeCookie {
@@ -16,16 +14,9 @@ export class BakeCookie {
   ) {}
 
   async execute({
-    token
+    userID
   }: CreateCookieRequest): Promise<Either<Error, Cookie>> {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET ?? 'no_env'
-    ) as User;
-
-    if (!decoded) throw new Error('Invalid token');
-
-    const userOrError = await this.userRepo.findById(decoded.id);
+    const userOrError = await this.userRepo.findById(userID);
 
     if (userOrError.isLeft()) {
       return new Left(userOrError.value);

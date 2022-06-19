@@ -24,7 +24,14 @@ export function userRouter(
     );
   router
     .route('/bake')
-    .post(new BakeCookieController(userRepo, cookieRepo).handle);
-  router.get('/cookies', new GetAllCookiesFromUserController(userRepo).handle);
+    .post(
+      new BakeCookieController(userRepo, cookieRepo).validate,
+      new BakeCookieController(userRepo, cookieRepo).handle
+    );
+  router.get(
+    '/cookies',
+    new GetAllCookiesFromUserController(userRepo).validate,
+    new GetAllCookiesFromUserController(userRepo).handle
+  );
   return router;
 }

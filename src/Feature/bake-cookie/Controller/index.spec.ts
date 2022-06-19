@@ -11,7 +11,7 @@ describe('Bake Cookie Controller', () => {
       password: 'testmesmo'
     });
 
-    token = response.body;
+    token = response.body.token;
   });
 
   afterAll(() => {
@@ -21,7 +21,7 @@ describe('Bake Cookie Controller', () => {
   it('should return a cookie', async () => {
     const response = await supertest(server)
       .post('/api/bake')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', token)
       .send();
 
     expect(response.status).toBe(200);

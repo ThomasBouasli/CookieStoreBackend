@@ -15,18 +15,18 @@ describe('getAllCookiesFromUser', () => {
       password: 'test12341234'
     });
 
-    token = response.body;
+    token = response.body.token;
 
     await supertest(server)
       .post('/api/bake')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', token)
       .send();
   });
 
   it('should return all cookies from user', async () => {
     const response = await supertest(server)
       .get('/api/cookies')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', token);
 
     expect(response.body).toHaveLength(1);
   });

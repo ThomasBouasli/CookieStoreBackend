@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import { randomUUID } from 'crypto';
 import { hashSync } from 'bcrypt';
 import { IUserRepository } from '@Adapter/Repository';
@@ -17,7 +16,7 @@ export class CreateUser {
     name,
     email,
     password
-  }: CreateUserRequest): Promise<Either<Error, string>> {
+  }: CreateUserRequest): Promise<Either<Error, User>> {
     const user: User = {
       id: randomUUID(),
       name,
@@ -35,8 +34,6 @@ export class CreateUser {
       return new Left(okOrError.value);
     }
 
-    const token = jwt.sign(user, process.env.JWT_SECRET ?? 'no_env');
-
-    return new Right(token);
+    return new Right(user);
   }
 }
