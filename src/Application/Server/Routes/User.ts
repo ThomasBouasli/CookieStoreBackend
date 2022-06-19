@@ -34,6 +34,6 @@ export function userRouter(
     new GetAllCookiesFromUserController(userRepo).validate,
     new GetAllCookiesFromUserController(userRepo).handle
   );
-  router.get('/verify-token', new VerifyTokenController().handle);
+  router.get('/verify-token', new VerifyTokenController(userRepo).handle);
   return router;
 }

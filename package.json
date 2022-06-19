@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "concurrently \"dotenv -e .env.dev -- tsnd -r tsconfig-paths/register src/Application/index.ts\" \"yarn --cwd ./src/Adapter/view dev\"",
-    "start": "node build/index.js",
+    "start": "tsnd -r tsconfig-paths/register src/Application",
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "prepare": "husky install"
