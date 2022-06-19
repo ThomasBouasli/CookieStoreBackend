@@ -26,8 +26,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send({ message: err.message });
 });
 
-const PORT = process.env.PORT ?? 0;
+const { PORT } = process.env;
 
 export const server = app.listen(PORT, () => {
-  PORT === process.env.PORT && console.log(`Server listening on port ${PORT}`);
+  PORT !== '0' && console.log(`Server listening on port ${PORT}`);
 });
