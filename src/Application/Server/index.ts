@@ -1,13 +1,23 @@
 import Express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import { userRouter } from './Routes';
-import { MockUserRepository } from '@Adapter/Repository/User';
+import {
+  MockUserRepository,
+  PrismaCookieRepository,
+  PrismaUserRepository
+} from '@Adapter/Repository';
 import { MockCookieRepository } from '@Adapter/Repository';
 import path from 'path';
 
+const { NODE_ENV, PORT } = process.env;
+
 const app = Express();
-const userRepo = new MockUserRepository();
-const cookieRepo = new MockCookieRepository(userRepo);
+const userRepo =
+  NODE_ENV === 'test' ? new MockUserRepository() : new PrismaUserRepository();
+const cookieRepo =
+  NODE_ENV === 'test'
+    ? new MockCookieRepository(userRepo)
+    : new PrismaCookieRepository();
 
 if (process.env.NODE_ENV === 'development') {
   app.use(cors());
@@ -25,8 +35,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   //Temporary Error Handler
   res.status(500).send({ message: err.message });
 });
-
-const { PORT } = process.env;
 
 export const server = app.listen(PORT, () => {
   PORT !== '0' && console.log(`Server listening on port ${PORT}`);

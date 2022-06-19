@@ -40,12 +40,6 @@ export class BakeCookie {
       return new Left(cookieOrError.value);
     }
 
-    const okOrError = await this.userRepo.update(user);
-
-    if (okOrError.isLeft()) {
-      return new Left(okOrError.value);
-    }
-
     cookie = cookieOrError.value;
 
     return new Right(cookieOrError.value);
