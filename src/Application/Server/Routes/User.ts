@@ -4,6 +4,7 @@ import { Router } from 'express';
 import { LogInController } from '@Controller/log-in';
 import { BakeCookieController } from '@Controller/bake-cookie';
 import { GetAllCookiesFromUserController } from '@Controller/get-all-cookies-from-user';
+import { VerifyTokenController } from '@Controller/verify-token';
 const router = Router();
 
 export function userRouter(
@@ -33,5 +34,6 @@ export function userRouter(
     new GetAllCookiesFromUserController(userRepo).validate,
     new GetAllCookiesFromUserController(userRepo).handle
   );
+  router.get('/verify-token', new VerifyTokenController().handle);
   return router;
 }
