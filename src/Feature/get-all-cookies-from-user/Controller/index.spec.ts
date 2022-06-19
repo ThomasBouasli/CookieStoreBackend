@@ -2,6 +2,10 @@ import { server } from '@Application/Server';
 import supertest from 'supertest';
 
 describe('getAllCookiesFromUser', () => {
+  afterAll(() => {
+    server.close();
+  });
+
   let token: string;
 
   beforeAll(async () => {
@@ -11,16 +15,12 @@ describe('getAllCookiesFromUser', () => {
       password: 'test12341234'
     });
 
-    console.log(response.body);
-
     token = response.body;
 
-    const res = await supertest(server)
+    await supertest(server)
       .post('/api/bake')
       .set('Authorization', `Bearer ${token}`)
       .send();
-
-    console.log(res.body);
   });
 
   it('should return all cookies from user', async () => {

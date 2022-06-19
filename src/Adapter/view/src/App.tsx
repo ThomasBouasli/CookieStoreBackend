@@ -1,13 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AuthRoutes from './Routes/AuthRoutes';
+import NoAuthRoutes from './Routes/NoAuth';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+    <>
+      <ReactNotifications />
+      <Router>
+        <NoAuthRoutes />
+        <AuthRoutes />
+      </Router>
+    </>
   );
 }
 

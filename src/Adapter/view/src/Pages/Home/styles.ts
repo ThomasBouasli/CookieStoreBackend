@@ -10,15 +10,6 @@ export const Wrapper = styled.main`
   width: 100%;
 `;
 
-export const Title = styled.h1`
-  font-family: Dosis;
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 61px;
-  letter-spacing: 0em;
-  text-align: center;
-`;
-
 export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;

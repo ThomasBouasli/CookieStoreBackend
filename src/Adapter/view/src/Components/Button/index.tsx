@@ -8,6 +8,7 @@ type props = {
   medium?: boolean;
   large?: boolean;
   onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
 };
 
 export default function Button({
@@ -17,7 +18,8 @@ export default function Button({
   small,
   medium,
   large,
-  onClick
+  onClick,
+  type
 }: props) {
   return (
     <S.Button
@@ -27,6 +29,7 @@ export default function Button({
       medium={medium}
       large={large}
       onClick={onClick}
+      type={type}
     >
       {text}
     </S.Button>
