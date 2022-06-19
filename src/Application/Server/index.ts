@@ -28,8 +28,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 const PORT = process.env.PORT ?? 0;
 
-console.log(`PORT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ${PORT}`);
-
 export const server = app.listen(PORT, () => {
   PORT === process.env.PORT && console.log(`Server listening on port ${PORT}`);
 });
