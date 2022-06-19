@@ -11,9 +11,15 @@ const cookieRepo = new MockCookieRepository(userRepo);
 app.use(Express.json());
 app.use('/', Express.static(path.join(__dirname, '../../Adapter/view/build')));
 app.use('/api', userRouter(userRepo, cookieRepo));
+app.get('*', (req, res) => {
+  //Let React Router handle all other routes
+  res.sendFile(
+    path.resolve(__dirname, '../../Adapter/view/build', 'index.html')
+  );
+});
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   //Temporary Error Handler
-  res.status(500).send({ error: err.message });
+  res.status(500).send({ message: err.message });
 });
 
 const PORT = process.env.PORT ?? 0;
