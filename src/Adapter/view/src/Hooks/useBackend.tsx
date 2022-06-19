@@ -5,9 +5,19 @@ import { useNavigate } from 'react-router-dom';
 export default function useBackend() {
   const navigate = useNavigate();
 
+  const paths = {
+    register: '/api/register',
+    verifyToken: '/api/verify-token'
+  };
+
+  if (process.env.NODE_ENV === 'development') {
+    paths.register = 'http://localhost:3333/api/register';
+    paths.verifyToken = 'http://localhost:3333/api/verify-token';
+  }
+
   async function Register(name: string, email: string, password: string) {
     try {
-      const { data } = await axios.post('/api/register', {
+      const { data } = await axios.post(paths.register, {
         name,
         email,
         password
@@ -38,7 +48,7 @@ export default function useBackend() {
   }
 
   async function VerifyToken() {
-    const { data } = await axios.get('/api/verify-token', {
+    const { data } = await axios.get(paths.verifyToken, {
       headers: {
         Authorization: localStorage.getItem('token') ?? ''
       }
