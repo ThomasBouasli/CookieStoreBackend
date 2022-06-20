@@ -3,7 +3,7 @@ import { Either, Left, Right } from '@Util/FunctionalErrorHandler';
 import { Cookie } from 'Entity/Cookie';
 import { randomUUID } from 'crypto';
 
-export type CreateCookieRequest = {
+export type BakeCookieRequest = {
   userID: string;
 };
 
@@ -13,9 +13,7 @@ export class BakeCookie {
     private userRepo: IUserRepository
   ) {}
 
-  async execute({
-    userID
-  }: CreateCookieRequest): Promise<Either<Error, Cookie>> {
+  async execute({ userID }: BakeCookieRequest): Promise<Either<Error, Cookie>> {
     const userOrError = await this.userRepo.findById(userID);
 
     if (userOrError.isLeft()) {
