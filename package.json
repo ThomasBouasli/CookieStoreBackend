@@ -47,16 +47,6 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "joi": "^17.6.0",
-    "jsonwebtoken": "^8.5.1",
-    "module-alias": "^2.2.2"
-  },
-  "_moduleAliases": {
-    "@Entity/*": "build/Entity/*/index.js",
-    "@Adapter/*": "build/Adapter/*",
-    "@Application": "build/Application/index.js",
-    "@Application/*": "build/Application/*",
-    "@Util/*": "build/Util/*",
-    "@Controller/*": "build/Feature/*/Controller/*",
-    "@UseCase/*": "build/Feature/*/UseCase/*"
+    "jsonwebtoken": "^8.5.1"
   }
 }
