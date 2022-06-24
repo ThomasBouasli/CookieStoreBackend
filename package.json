@@ -6,6 +6,7 @@
   "author": "Thomas Bouasli <thomas.bouasli@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "postinstall": "cd src/Adapter/view && yarn",
     "dev": "concurrently \"dotenv -e .env.dev -- tsnd -r tsconfig-paths/register src/Application/index.ts\" \"yarn --cwd ./src/Adapter/view dev\"",
     "start": "dotenv -e .env -- node -r ts-node/register/transpile-only -r tsconfig-paths/register build/Application/index.js",
     "test": "dotenv -e .env.test -- jest",
