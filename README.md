@@ -1,13 +1,5 @@
-# Clean Architecture
+# Cookie Store
 
-A Simple and light template to build applications with Clean Architecture.
-
-## Package Manager
-
-- Yarn
-
-## Dependencies
-
-- typescript & tsconfig-paths
-- ts-node & ts-node-dev
-- jest & @types/jest & ts-jest
+Not much going in right now.
+You can sign-up, log-in, bake a cookie and see them.
+But hey, at least it is Over-Engineered!
