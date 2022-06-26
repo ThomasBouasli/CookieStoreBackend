@@ -1,17 +1,20 @@
 import axios from 'axios';
+import { useCallback, useMemo } from 'react';
 import { Store } from 'react-notifications-component';
 import { useNavigate } from 'react-router-dom';
 
 export default function useBackend() {
   const navigate = useNavigate();
 
-  const paths = {
-    register: '/api/register',
-    verifyToken: '/api/verify-token',
-    getAllCookiesFromUser: '/api/cookies',
-    bakeCookie: '/api/bake',
-    logIn: '/api/login'
-  };
+  const paths = useMemo(() => {
+    return {
+      register: '/api/register',
+      verifyToken: '/api/verify-token',
+      getAllCookiesFromUser: '/api/cookies',
+      bakeCookie: '/api/bake',
+      logIn: '/api/login'
+    };
+  }, []);
 
   if (process.env.NODE_ENV === 'development') {
     paths.register = 'http://localhost:3333/api/register';
@@ -21,70 +24,76 @@ export default function useBackend() {
     paths.logIn = 'http://localhost:3333/api/login';
   }
 
-  async function Register(name: string, email: string, password: string) {
-    try {
-      const { data } = await axios.post(paths.register, {
-        name,
-        email,
-        password
-      });
+  const Register = useCallback(
+    async (name: string, email: string, password: string) => {
+      try {
+        const { data } = await axios.post(paths.register, {
+          name,
+          email,
+          password
+        });
 
-      localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.token);
 
-      navigate('/home');
+        navigate('/home');
 
-      return;
-    } catch (error: any) {
-      Store.addNotification({
-        title: 'Error!',
-        message: error.response.data.message,
-        type: 'danger',
-        insert: 'top',
-        container: 'top-right',
-        animationIn: ['animate__animated', 'animate__fadeIn'],
-        animationOut: ['animate__animated', 'animate__fadeOut'],
-        dismiss: {
-          duration: 5000,
-          onScreen: true
-        }
-      });
+        return;
+      } catch (error: any) {
+        Store.addNotification({
+          title: 'Error!',
+          message: error.response.data.message,
+          type: 'danger',
+          insert: 'top',
+          container: 'top-right',
+          animationIn: ['animate__animated', 'animate__fadeIn'],
+          animationOut: ['animate__animated', 'animate__fadeOut'],
+          dismiss: {
+            duration: 5000,
+            onScreen: true
+          }
+        });
 
-      return;
-    }
-  }
+        return;
+      }
+    },
+    [navigate, paths]
+  );
 
-  async function LogIn(email: string, password: string) {
-    try {
-      const { data } = await axios.post(paths.logIn, {
-        email,
-        password
-      });
+  const LogIn = useCallback(
+    async (email: string, password: string) => {
+      try {
+        const { data } = await axios.post(paths.logIn, {
+          email,
+          password
+        });
 
-      localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.token);
 
-      navigate('/home');
+        navigate('/home');
 
-      return;
-    } catch (error: any) {
-      Store.addNotification({
-        title: 'Error!',
-        message: error.response.data.message,
-        type: 'danger',
-        insert: 'top',
-        container: 'top-right',
-        animationIn: ['animate__animated', 'animate__fadeIn'],
-        animationOut: ['animate__animated', 'animate__fadeOut'],
-        dismiss: {
-          duration: 5000,
-          onScreen: true
-        }
-      });
+        return;
+      } catch (error: any) {
+        Store.addNotification({
+          title: 'Error!',
+          message: error.response.data.message,
+          type: 'danger',
+          insert: 'top',
+          container: 'top-right',
+          animationIn: ['animate__animated', 'animate__fadeIn'],
+          animationOut: ['animate__animated', 'animate__fadeOut'],
+          dismiss: {
+            duration: 5000,
+            onScreen: true
+          }
+        });
 
-      return;
-    }
-  }
+        return;
+      }
+    },
+    [navigate, paths]
+  );
 
-  async function VerifyToken() {
+  const VerifyToken = useCallback(async () => {
     const { data } = await axios.get(paths.verifyToken, {
       headers: {
         Authorization: localStorage.getItem('token') ?? ''
@@ -95,9 +104,9 @@ export default function useBackend() {
       localStorage.removeItem('token');
       navigate('/');
     }
-  }
+  }, [navigate, paths]);
 
-  async function getAllCookiesFromUser() {
+  const getAllCookiesFromUser = useCallback(async () => {
     try {
       const { data } = await axios.get(paths.getAllCookiesFromUser, {
         headers: {
@@ -123,9 +132,9 @@ export default function useBackend() {
 
       return;
     }
-  }
+  }, [paths]);
 
-  async function bakeCookie() {
+  const bakeCookie = useCallback(async () => {
     try {
       const { data } = await axios.post(
         paths.bakeCookie,
@@ -155,7 +164,7 @@ export default function useBackend() {
 
       return;
     }
-  }
+  }, [paths]);
 
   return {
     Register,

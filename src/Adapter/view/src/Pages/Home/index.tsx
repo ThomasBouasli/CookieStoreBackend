@@ -18,7 +18,7 @@ export default function Home() {
   const getCookies = useCallback(async () => {
     const cookies = await getAllCookiesFromUser();
     setCookies(cookies);
-  }, []);
+  }, [getAllCookiesFromUser]);
 
   useEffect(() => {
     getCookies();
