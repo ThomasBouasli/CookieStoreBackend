@@ -6,13 +6,12 @@
   "author": "Thomas Bouasli <thomas.bouasli@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "cd src/Adapter/view && yarn",
-    "dev": "concurrently \"dotenv -e .env.dev -- tsnd -r tsconfig-paths/register src/Application/index.ts\" \"yarn --cwd ./src/Adapter/view dev\"",
+    "dev": "dotenv -e .env.dev -- tsnd -r tsconfig-paths/register src/Application/index.ts",
     "start": "dotenv -e .env -- node -r ts-node/register/transpile-only -r tsconfig-paths/register build/Application/index.js",
     "test": "dotenv -e .env.test -- jest",
     "lint": "eslint . --ext .ts",
     "prepare": "husky install",
-    "build": "tsc && rm -rf build/Adapter/view && mkdir build/Adapter/view && cd src/Adapter/view && yarn build"
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
